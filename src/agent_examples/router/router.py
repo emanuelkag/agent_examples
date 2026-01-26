@@ -9,7 +9,7 @@ from ..telemetry import log_event
 
 def _heuristic_route(query: str) -> str:
     q = query.lower()
-    if any(k in q for k in ["systematic", "slr", "literature", "survey", "meta-analysis"]):
+    if any(k in q for k in ["systematic", "slr", "literature", "survey", "meta-analysis", "arxiv", "paper", "research"]):
         return "slr"
     if any(k in q for k in ["internal", "korpus", "knowledge base", "our docs", "company"]):
         return "rag"

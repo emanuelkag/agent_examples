@@ -28,5 +28,5 @@ class Settings(BaseSettings):
     model_registry_path: str = "configs/model_registry.yaml"
     source_registry_path: str = "configs/source_registry.yaml"
 
-    router_use_llm: bool = False
+    router_use_llm: bool = True
     model_timeout_s: float | None = 60.0

@@ -3,7 +3,7 @@ from __future__ import annotations
 from ..llm import build_agent
 from ..telemetry import log_event
 from ..types import RetrievalChunk
-from .graph import fetch_graph_context
+from .graph import fetch_graph_context, fetch_graph_context_for_query
 from .retriever import retrieve
 
 
@@ -25,7 +25,19 @@ def answer_query(query: str, top_k: int = 5) -> dict:
     sources = _format_sources(chunks)
 
     if not chunks:
-        return {"answer": "No sources found in the local corpus.", "sources": []}
+        graph_context, graph_sources = fetch_graph_context_for_query(query)
+        if not graph_context:
+            return {"answer": "No sources found in the local corpus.", "sources": []}
+        context = "\n".join(f"- {g}" for g in graph_context[: top_k])
+        prompt = (
+            "Answer the question using only the provided context. "
+            "Cite sources by name in the answer.\n\n"
+            f"Question: {query}\n\nContext:\n{context}\n"
+        )
+        agent = build_agent(system_prompt="You are a precise, source-grounded assistant.")
+        result = agent.run_sync(prompt)
+        log_event("rag_query", {"query": query, "sources": graph_sources})
+        return {"answer": result.output, "sources": graph_sources}
 
     if not _self_eval(chunks):
         return {"answer": "Insufficient coverage. Add more sources or widen retrieval.", "sources": sources}
