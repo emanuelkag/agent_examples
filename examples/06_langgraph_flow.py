@@ -1,13 +1,19 @@
 import asyncio
 import sys
+from pathlib import Path
 from typing import TypedDict
+
+ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
 
 try:
     from langgraph.graph import StateGraph
 except Exception as exc:
     raise SystemExit("Install extras: uv sync --extra langgraph") from exc
 
-from agent_os_examples.router.router import run_routed_query
+from agent_examples.router.router import run_routed_query
 
 
 class State(TypedDict):
@@ -38,3 +44,17 @@ asyncio.run(main())
 
 # Sync variant (uncomment to use)
 # print(app.invoke({"query": query}))
+
+# Streaming variant (direct LLM path only; uncomment to demo)
+# import asyncio
+# from agent_examples.llm import build_agent
+#
+# async def stream_direct() -> None:
+#     agent = build_agent(system_prompt="Answer clearly and concisely.")
+#     async with agent.run_stream(query) as response:
+#         async for chunk in response.stream_text(delta=True):
+#             print(chunk, end="", flush=True)
+#         print()
+#         print(await response.get_output())
+#
+# asyncio.run(stream_direct())

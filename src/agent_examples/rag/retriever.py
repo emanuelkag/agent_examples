@@ -9,7 +9,7 @@ from ..types import RetrievalChunk
 
 def retrieve(query: str, top_k: int = 5, settings: Settings | None = None) -> list[RetrievalChunk]:
     settings = settings or Settings()
-    qdrant = QdrantClient(url=settings.qdrant_url, check_compatibility=False)
+    qdrant = QdrantClient(url=settings.qdrant_url)
 
     try:
         qdrant.get_collection(settings.qdrant_collection)

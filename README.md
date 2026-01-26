@@ -18,7 +18,7 @@ All runs log to outputs/telemetry.jsonl.
 4) uv sync --extra sources --extra langgraph
 5) copy .env.example -> .env
 6) uv run python examples/01_single_agent.py
-7) uv run uvicorn agent_os_examples.api:app --reload
+7) uv run uvicorn agent_examples.api:app --reload
 
 ## Example scripts
 - examples/01_single_agent.py: single agent chat (local Ollama)

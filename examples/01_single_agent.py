@@ -1,10 +1,10 @@
-from agent_os_examples.agents.single import run
+from agent_examples.agents.single import run
 
 print(run("Give a 3-bullet summary of what an AI Act compliance checklist should include."))
 
 # Async streaming variant (uncomment to demo token streaming)
 # import asyncio
-# from agent_os_examples.llm import build_agent
+# from agent_examples.llm import build_agent
 #
 # async def main() -> None:
 #     agent = build_agent(system_prompt="You are a helpful local assistant.")

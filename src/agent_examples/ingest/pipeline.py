@@ -86,7 +86,7 @@ def _upsert_graph(doc: Document, sentences: Iterable[str], settings: Settings) -
 
 def ingest_documents(docs: list[Document], settings: Settings | None = None) -> dict:
     settings = settings or Settings()
-    qdrant = QdrantClient(url=settings.qdrant_url, check_compatibility=False)
+    qdrant = QdrantClient(url=settings.qdrant_url)
 
     ingested = 0
     for doc in docs:

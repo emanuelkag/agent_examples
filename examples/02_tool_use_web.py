@@ -1,7 +1,7 @@
 import asyncio
 import sys
 
-from agent_os_examples.sources.web_search import search_web
+from agent_examples.sources.web_search import search_web
 
 query = "EU AI Act high-risk obligations"
 sys.stdout.reconfigure(encoding="utf-8")
