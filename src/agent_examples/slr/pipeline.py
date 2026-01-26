@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Callable
+
 from ..ingest.pipeline import ingest_documents
 from ..llm import build_agent
 from ..telemetry import log_event
@@ -14,6 +16,12 @@ def run_slr(question: str, max_results: int = 5) -> dict:
     docs.extend(search_web(question, max_results=max_results))
     docs.extend(search_arxiv(question, max_results=max_results))
     docs.extend(fetch_wikipedia_summary(question))
+
+    sources = []
+    for doc in docs:
+        label = doc.source_url or doc.title
+        if label and label not in sources:
+            sources.append(label)
 
     ingest = ingest_documents(docs)
 
@@ -30,4 +38,44 @@ def run_slr(question: str, max_results: int = 5) -> dict:
         "question": question,
         "docs_ingested": ingest.get("ingested", 0),
         "summary": result.output,
+        "sources": sources,
+    }
+
+
+async def run_slr_stream(
+    question: str,
+    max_results: int = 5,
+    on_chunk: Callable[[str], None] | None = None,
+) -> dict:
+    docs: list[Document] = []
+    docs.extend(search_web(question, max_results=max_results))
+    docs.extend(search_arxiv(question, max_results=max_results))
+    docs.extend(fetch_wikipedia_summary(question))
+
+    sources = []
+    for doc in docs:
+        label = doc.source_url or doc.title
+        if label and label not in sources:
+            sources.append(label)
+
+    ingest = ingest_documents(docs)
+
+    titles = "\n".join(f"- {d.title}" for d in docs[:10])
+    prompt = (
+        "You are running a lightweight systematic review. "
+        "Summarize the key themes from these sources:\n" + titles
+    )
+    agent = build_agent(system_prompt="You are a rigorous research synthesizer.")
+    async with agent.run_stream(prompt) as response:
+        async for chunk in response.stream_text(delta=True):
+            if on_chunk:
+                on_chunk(chunk)
+        output = await response.get_output()
+
+    log_event("slr_run", {"question": question, "count": ingest.get("ingested", 0)})
+    return {
+        "question": question,
+        "docs_ingested": ingest.get("ingested", 0),
+        "summary": output,
+        "sources": sources,
     }

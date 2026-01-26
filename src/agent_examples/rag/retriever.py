@@ -18,14 +18,22 @@ def retrieve(query: str, top_k: int = 5, settings: Settings | None = None) -> li
 
     vector = embed_texts([query], settings=settings)[0]
     try:
-        response = qdrant.query_points(
-            collection_name=settings.qdrant_collection,
-            query=vector,
-            limit=top_k,
-        )
+        if hasattr(qdrant, "query_points"):
+            response = qdrant.query_points(
+                collection_name=settings.qdrant_collection,
+                query=vector,
+                limit=top_k,
+            )
+            hits = response.points
+        else:
+            hits = qdrant.search(
+                collection_name=settings.qdrant_collection,
+                query_vector=vector,
+                limit=top_k,
+                with_payload=True,
+            )
     except Exception:
         return []
-    hits = response.points
     results: list[RetrievalChunk] = []
     for hit in hits:
         payload = hit.payload or {}
