@@ -1,0 +1,18 @@
+schema_version: model_registry.v1
+default_chat: openai_chat
+default_embed: local_embed
+models:
+  local_chat:
+    provider: openai_compat
+    base_url_env: OLLAMA_BASE_URL
+    api_key_env: OLLAMA_API_KEY
+    model: llama3.1:8b
+  local_embed:
+    provider: ollama_embed
+    base_url_env: OLLAMA_API_BASE
+    model: nomic-embed-text
+  openai_chat:
+    provider: openai
+    base_url_env: OPENAI_BASE_URL
+    api_key_env: OPENAI_API_KEY
+    model: gpt-4o-mini

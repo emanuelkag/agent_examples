@@ -1,0 +1,51 @@
+schema_version: source_registry.v1
+sources:
+  - name: local_text
+    source_type: local_text
+    enabled: true
+    default_params:
+      extensions: [".md", ".txt"]
+    tags: ["text"]
+
+  - name: web_search
+    source_type: web_search
+    enabled: true
+    default_params:
+      max_results: 5
+    tags: ["web", "virtual"]
+
+  - name: arxiv
+    source_type: arxiv
+    enabled: true
+    default_params:
+      max_results: 5
+    tags: ["papers", "virtual"]
+
+  - name: wikipedia
+    source_type: wikipedia
+    enabled: true
+    default_params:
+      lang: en
+    tags: ["reference", "virtual"]
+
+  - name: confluence
+    source_type: confluence
+    enabled: false
+    default_params:
+      base_url_env: CONFLUENCE_BASE_URL
+      token_env: CONFLUENCE_API_TOKEN
+    tags: ["confluence", "virtual"]
+
+  - name: ms_graph
+    source_type: ms_graph
+    enabled: false
+    default_params:
+      token_env: MS_GRAPH_TOKEN
+    tags: ["microsoft", "virtual"]
+
+  - name: google_drive
+    source_type: google_drive
+    enabled: false
+    default_params:
+      token_env: GOOGLE_DRIVE_TOKEN
+    tags: ["google", "virtual"]

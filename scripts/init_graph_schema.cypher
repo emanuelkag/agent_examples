@@ -1,0 +1,6 @@
+CREATE CONSTRAINT sourcedoc_doc_id IF NOT EXISTS
+FOR (d:SourceDoc) REQUIRE d.doc_id IS UNIQUE;
+CREATE CONSTRAINT claim_claim_id IF NOT EXISTS
+FOR (c:Claim) REQUIRE c.claim_id IS UNIQUE;
+CREATE CONSTRAINT entity_key IF NOT EXISTS
+FOR (e:Entity) REQUIRE e.key IS UNIQUE;
