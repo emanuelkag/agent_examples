@@ -1,3 +1,5 @@
+> Hinweis zur aktuellen Workspace-Rolle: Dieses Repository ist derzeit ein ``donor/reference repo``.
+
 # Agent OS Examples (PydanticAI)
 
 Local-first agent architecture examples for the Oikos workshop.
