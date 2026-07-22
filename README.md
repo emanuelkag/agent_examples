@@ -56,3 +56,15 @@ Sources -> Registry/Adapters -> Normalize/Chunk -> Embeddings -> Qdrant
 Graph extraction -> Neo4j
 Retriever (vector + graph) -> Self-eval gate -> Composer
 SLR endpoint ingests external sources and stores into vector + graph
+
+## Packetized execution canon, 2026-07-22
+
+This repo now also exposes its next work through `planning/program_registry.v1.yaml`.
+
+Initial packet ids:
+
+- `ae-001`, async execution registry and packet discipline
+- `ae-002`, map current roadmap/docs/code surface into explicit work packets
+- `ae-003`, run the next priority execution wave with evidence and acceptance verification
+
+That is now the planning entrypoint for clean async sessions with explicit budgets.

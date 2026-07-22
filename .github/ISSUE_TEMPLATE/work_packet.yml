@@ -1,0 +1,130 @@
+name: Work packet
+description: Canon-linked execution packet for long-horizon async work
+title: "[packet] <short title>"
+labels:
+  - work-packet
+body:
+  - type: input
+    id: issue_packet_id
+    attributes:
+      label: Issue packet ID
+      description: Stable id from the repo registry
+      placeholder: ex-001
+    validations:
+      required: true
+
+  - type: input
+    id: program_id
+    attributes:
+      label: Program ID
+      placeholder: program_example
+    validations:
+      required: true
+
+  - type: input
+    id: preferred_process_template
+    attributes:
+      label: Preferred process template
+      placeholder: spec_to_execution_v1
+    validations:
+      required: true
+
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+      description: What concrete outcome should exist when this packet is done?
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: In-scope work only
+      placeholder: |
+        - In scope item 1
+        - In scope item 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: non_goals
+    attributes:
+      label: Non-goals
+      description: Explicitly out of scope
+      placeholder: |
+        - Out of scope item 1
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance criteria
+      placeholder: |
+        - Criterion 1
+        - Criterion 2
+        - Criterion 3
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence_required
+    attributes:
+      label: Evidence required
+      placeholder: |
+        - docs
+        - tests
+        - screenshots
+        - video
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: Packet ids, PRs, docs, repos, or blockers
+
+  - type: textarea
+    id: repo_targets
+    attributes:
+      label: Repo targets
+      placeholder: |
+        - path/or/package
+        - another/path
+    validations:
+      required: true
+
+  - type: textarea
+    id: budget_envelope
+    attributes:
+      label: Budget envelope
+      placeholder: |
+        max_wallclock_minutes: 90
+        max_cost_usd: 5
+        max_tokens: 200000
+        max_parallel_branches: 1
+        verification_budget_ratio: 0.25
+        exhaustion_action: pause
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: execution_policy
+    attributes:
+      label: Execution policy
+      options:
+        - label: Human review required before done
+        - label: UI evidence required
+        - label: Strong-auth approval required before side effects
+        - label: External side effects forbidden in this packet
+        - label: Docs update required
+        - label: Tests required
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Design notes, policy notes, follow-up ideas, or sync hints

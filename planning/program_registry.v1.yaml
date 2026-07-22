@@ -1,0 +1,189 @@
+registry_id: agent_examples_program_registry_v1
+version: 1
+status: draft
+purpose: Canonical repo-local async execution registry for agent_examples.
+operating_model:
+  ssot_rule: repo_registry_then_issue_tracker
+  preferred_issue_tracker: github
+  execution_rule: every_long_run_must_bind_to_an_issue_packet
+  evidence_rule: ui_or_system_affecting_work_requires_evidence
+  sync_rule: github_issue_state_is_projection_not_canon
+priority_dimensions:
+- strategic_leverage
+- urgency
+- dependency_release
+- evidence_readiness
+- effort
+- risk
+programs:
+- program_id: program_agent_examples
+  name: Agent Examples
+  goal: Evolve Agent Examples with packetized planning, evidence-backed product execution, and clean continuation paths for UI and feature work.
+  repo_home: repos/emanuelkag/agent_examples
+  preferred_process_template: issue_driven_program_execution_v1
+  budget_profile: capped_deep
+  review_cadence_days: 7
+  epics:
+  - epic_id: epic_ae_registry
+    title: Adopt packetized async execution discipline in Agent Examples
+    priority: p0
+  - epic_id: epic_ae_planning
+    title: Map current roadmap and code surface into explicit work packets in Agent Examples
+    priority: p0
+  - epic_id: epic_ae_execution
+    title: Run the next priority execution wave in Agent Examples
+    priority: p1
+  issue_packets:
+  - issue_packet_id: ae-001
+    epic_id: epic_ae_registry
+    title: Adopt async execution registry and packet discipline in Agent Examples
+    type: architecture
+    labels:
+    - planning
+    - async-execution
+    - registry
+    - agent_examples
+    priority_score: 97
+    effort_band: small
+    objective: Make Agent Examples packet-addressable so clean sessions can continue work with explicit budgets and acceptance criteria.
+    scope:
+    - Create the canonical planning registry, roadmap, async execution model, and issue template.
+    - Map future work to stable packet ids.
+    - Anchor continuation to repo-local planning canon rather than chat context.
+    non_goals:
+    - Do not implement downstream feature packets in this packet.
+    - Do not automate GitHub sync in this packet.
+    acceptance_criteria:
+    - Repo contains the standard async-execution planning files.
+    - Next work is packet-addressable.
+    - Fresh sessions can continue by reading planning/program_registry.v1.yaml alone.
+    evidence_required:
+    - docs
+    - registry yaml
+    dependencies: []
+    repo_targets:
+    - planning/program_registry.v1.yaml
+    - planning/async_execution_roadmap.md
+    - docs/async_execution_model.md
+    - .github/ISSUE_TEMPLATE/work_packet.yml
+    budget_envelope:
+      max_wallclock_minutes: 120
+      max_cost_usd: 12
+      max_tokens: 400000
+      max_parallel_branches: 1
+      verification_budget_ratio: 0.3
+      exhaustion_action: escalate
+    execution_policy:
+      ui_evidence_required: false
+      human_review_required: true
+      strong_auth_required: false
+      external_side_effects: forbidden
+    sync:
+      github_labels:
+      - planning
+      - async-execution
+      - registry
+      - agent_examples
+      draft_issue_title: '[packet] Adopt async execution registry and packet discipline in Agent Examples'
+  - issue_packet_id: ae-002
+    epic_id: epic_ae_planning
+    title: Map current roadmap, docs, and code surface into explicit work packets in Agent Examples
+    type: architecture
+    labels:
+    - planning
+    - roadmap
+    - packetization
+    - agent_examples
+    priority_score: 93
+    effort_band: medium
+    objective: Translate the current roadmap and implementation surface of Agent Examples into explicit execution packets and dependencies.
+    scope:
+    - Identify the next real work clusters from existing docs, code, and tests.
+    - Define packet ids, acceptance criteria, evidence obligations, and budgets for the next wave.
+    - Clarify which surfaces or subsystems should be tackled first.
+    non_goals:
+    - Do not implement all mapped packets in this step.
+    - Do not let tracker state replace the repo canon.
+    acceptance_criteria:
+    - The next major work clusters are packet-addressable.
+    - Dependencies and evidence obligations are explicit.
+    - Future async runs can start from packet ids instead of vague continuation.
+    evidence_required:
+    - registry diff
+    - roadmap notes
+    dependencies:
+    - ae-001
+    repo_targets:
+    - src
+    - scripts
+    - docs
+    - README.md
+    budget_envelope:
+      max_wallclock_minutes: 150
+      max_cost_usd: 15
+      max_tokens: 500000
+      max_parallel_branches: 2
+      verification_budget_ratio: 0.3
+      exhaustion_action: escalate
+    execution_policy:
+      ui_evidence_required: false
+      human_review_required: true
+      strong_auth_required: false
+      external_side_effects: forbidden
+    sync:
+      github_labels:
+      - planning
+      - roadmap
+      - packetization
+      - agent_examples
+      draft_issue_title: '[packet] Map current roadmap, docs, and code surface into explicit work packets in Agent Examples'
+  - issue_packet_id: ae-003
+    epic_id: epic_ae_execution
+    title: Build the next priority product and UX execution wave in Agent Examples
+    type: product_slice
+    labels: &id001
+    - ui
+    - product
+    - evidence
+    - agent_examples
+    priority_score: 90
+    effort_band: medium
+    objective: Advance the next user-facing slice in Agent Examples with explicit acceptance criteria and real evidence.
+    scope:
+    - Implement the next highest-value user-facing improvement wave.
+    - Capture runnable state and evidence for the journey.
+    - Write follow-up deltas back as packet-ready notes.
+    non_goals:
+    - Do not sprawl into unrelated backlog items in this packet.
+    - Do not allow external side effects unless a later explicit packet changes that boundary.
+    acceptance_criteria:
+    - The next priority execution wave is delivered against explicit scope.
+    - Verification or evidence artifacts exist.
+    - Follow-up deltas are written back as packet-ready notes.
+    evidence_required:
+    - runnable app state
+    - screenshots
+    - video or walkthrough notes
+    dependencies:
+    - ae-001
+    - ae-002
+    repo_targets:
+    - src
+    - scripts
+    - docs
+    - README.md
+    budget_envelope:
+      max_wallclock_minutes: 180
+      max_cost_usd: 18
+      max_tokens: 600000
+      max_parallel_branches: 2
+      verification_budget_ratio: 0.35
+      exhaustion_action: escalate
+    execution_policy:
+      ui_evidence_required: true
+      human_review_required: true
+      strong_auth_required: false
+      external_side_effects: forbidden
+    sync:
+      github_labels: *id001
+      draft_issue_title: '[packet] Build the next priority product and UX execution wave in Agent Examples'
